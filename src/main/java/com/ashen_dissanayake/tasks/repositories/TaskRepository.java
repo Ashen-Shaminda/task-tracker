@@ -1,4 +1,4 @@
-package com.ashen_dissanayake.repositories;
+package com.ashen_dissanayake.tasks.repositories;
 
 import com.ashen_dissanayake.tasks.domain.entities.Task;
 import org.springframework.data.jpa.repository.JpaRepository;
