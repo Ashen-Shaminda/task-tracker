@@ -4,6 +4,7 @@ import com.ashen_dissanayake.tasks.domain.dto.TaskDto;
 import com.ashen_dissanayake.tasks.domain.entities.Task;
 import com.ashen_dissanayake.tasks.mappers.TaskMapper;
 import com.ashen_dissanayake.tasks.services.TaskService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -32,7 +33,7 @@ public class TaskController {
    }
 
    @PostMapping
-   public ResponseEntity<TaskDto> createTask(@PathVariable("task_list_id") UUID taskListId, @RequestBody TaskDto taskDto) {
+   public ResponseEntity<TaskDto> createTask(@PathVariable("task_list_id") UUID taskListId, @RequestBody @Valid TaskDto taskDto) {
       Task createdTask = taskService.createTask(taskListId, taskMapper.fromDto(taskDto));
 
       return new ResponseEntity<>(taskMapper.toDto(createdTask), HttpStatus.CREATED);
@@ -44,7 +45,7 @@ public class TaskController {
    }
 
    @PutMapping(path = "/{task_id}")
-   public ResponseEntity<TaskDto> updateTask(@PathVariable("task_list_id") UUID taskListId, @PathVariable("task_id") UUID taskId, @RequestBody TaskDto taskDto) {
+   public ResponseEntity<TaskDto> updateTask(@PathVariable("task_list_id") UUID taskListId, @PathVariable("task_id") UUID taskId, @Valid @RequestBody TaskDto taskDto) {
       Task updatedTask = taskService.updateTask(taskListId, taskId, taskMapper.fromDto(taskDto));
 
       return new ResponseEntity<>(taskMapper.toDto(updatedTask), HttpStatus.OK);

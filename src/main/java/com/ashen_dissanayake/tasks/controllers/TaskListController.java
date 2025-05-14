@@ -4,6 +4,7 @@ import com.ashen_dissanayake.tasks.domain.dto.TaskListDto;
 import com.ashen_dissanayake.tasks.domain.entities.TaskList;
 import com.ashen_dissanayake.tasks.mappers.TaskListMapper;
 import com.ashen_dissanayake.tasks.services.TaskListService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -32,7 +33,7 @@ public class TaskListController {
    }
 
    @PostMapping
-   public ResponseEntity<TaskListDto> createTaskList(@RequestBody TaskListDto taskListDto) {
+   public ResponseEntity<TaskListDto> createTaskList(@RequestBody @Valid TaskListDto taskListDto) {
       TaskList createdTaskList = taskListService.createTaskList(taskListMapper.fromDto(taskListDto));
 
       return ResponseEntity.status(HttpStatus.CREATED).body(taskListMapper.toDto(createdTaskList));
@@ -44,7 +45,7 @@ public class TaskListController {
    }
 
    @PutMapping(path = "/{id}")
-   public ResponseEntity<TaskListDto> updateTaskList(@PathVariable("id") UUID id, @RequestBody TaskListDto taskListDto) {
+   public ResponseEntity<TaskListDto> updateTaskList(@PathVariable("id") UUID id, @RequestBody @Valid TaskListDto taskListDto) {
       TaskList updatedTaskList = taskListService.updateTaskList(id, taskListMapper.fromDto(taskListDto));
 
       return ResponseEntity.status(HttpStatus.OK).body(taskListMapper.toDto(updatedTaskList));
