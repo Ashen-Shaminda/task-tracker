@@ -7,7 +7,7 @@ public record TaskListDto(UUID id,
                           String title,
                           String description,
                           Integer count,
-                          Double Progress,
+                          Double progress,
                           List<TaskDto> tasks
 ) {
 }
