@@ -34,8 +34,12 @@ public class TaskServiceImpl implements TaskService {
    @Override
    public Task createTask(UUID taskListId, Task task) {
       if (null != task.getId()) throw new IllegalArgumentException("Task already has an id.");
+
       if (null == task.getTitle() || task.getTitle().isBlank())
          throw new IllegalArgumentException("Task list title cannot be blank.");
+
+      if (task.getDueDate() != null && !task.getDueDate().isAfter(LocalDateTime.now()))
+         throw new IllegalArgumentException("Due date must be in the future.");
 
       TaskPriority taskPriority = Optional.ofNullable(task.getPriority()).orElse(TaskPriority.MEDIUM);
       TaskStatus taskStatus = TaskStatus.OPEN;
@@ -72,6 +76,9 @@ public class TaskServiceImpl implements TaskService {
       if (null == task.getPriority()) throw new IllegalArgumentException("Task must have a valid priority.");
 
       if (null == task.getStatus()) throw new IllegalArgumentException("Task must have a valid status.");
+
+      if (task.getDueDate() != null && !task.getDueDate().isAfter(LocalDateTime.now()))
+         throw new IllegalArgumentException("Due date must be in the future.");
 
       Task exisitingTask = taskRepository.findByTaskListIdAndId(taskListId, taskId)
               .orElseThrow(() -> new IllegalArgumentException("Task not found!."));

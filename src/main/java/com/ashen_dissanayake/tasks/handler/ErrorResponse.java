@@ -1,4 +1,4 @@
-package com.ashen_dissanayake.tasks.domain.dto;
+package com.ashen_dissanayake.tasks.handler;
 
 public record ErrorResponse(
         int status,

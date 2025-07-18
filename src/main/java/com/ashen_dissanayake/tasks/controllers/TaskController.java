@@ -33,7 +33,7 @@ public class TaskController {
    }
 
    @PostMapping
-   public ResponseEntity<TaskDto> createTask(@PathVariable("task_list_id") UUID taskListId, @RequestBody @Valid TaskDto taskDto) {
+   public ResponseEntity<TaskDto> createTask(@PathVariable("task_list_id") UUID taskListId, @RequestBody TaskDto taskDto) {
       Task createdTask = taskService.createTask(taskListId, taskMapper.fromDto(taskDto));
 
       return new ResponseEntity<>(taskMapper.toDto(createdTask), HttpStatus.CREATED);
